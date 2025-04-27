@@ -10,7 +10,15 @@ st.set_page_config(page_title="Which Posts Should Be Fact-Checked?", layout="cen
 # Authenticate Google Sheets
 @st.cache_resource
 def get_gsheet_client():
-    return pygsheets.authorize(client_secret=dict(st.secrets["gspread"]))
+    scopes = [
+        "https://www.googleapis.com/auth/spreadsheets",
+        "https://www.googleapis.com/auth/drive"
+    ]
+    credentials = Credentials.from_service_account_info(
+        st.secrets["gspread"],
+        scopes=scopes
+    )
+    return pygsheets.authorize(custom_credentials=credentials)
 
 # Load posts from CSV
 @st.cache_data
