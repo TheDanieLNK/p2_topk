@@ -3,6 +3,7 @@ import pandas as pd
 import uuid
 from datetime import datetime
 import pygsheets
+from google.oauth2.service_account import Credentials
 
 # Page config
 st.set_page_config(page_title="Which Posts Should Be Fact-Checked?", layout="centered")
