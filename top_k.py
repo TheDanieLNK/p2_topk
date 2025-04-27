@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import uuid
-from datetime import datetime
+from datetime import datetime, UTC
 import pygsheets
 from google.oauth2.service_account import Credentials
 
@@ -83,7 +83,7 @@ with st.form("topk_form"):
         st.divider()
 
         ratings.append({
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
             "user_id": st.session_state.user_id,
             "participant_id": user_identifier,
             "post_id": row['post_id'],
