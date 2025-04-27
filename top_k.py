@@ -102,5 +102,14 @@ with st.form("topk_form"):
             gc = get_gsheet_client()
             sheet = gc.open("TopK_Ratings")
             wks = sheet.sheet1
-            wks.append_table(result_df.values.tolist(), start='A2', end=None, dimension='ROWS', overwrite=False)
+            
+             # Determine the next available row
+            existing_rows = len(wks.get_all_values())
+            next_row = existing_rows + 1
+
+            # Prepare the data to append
+            data_to_append = result_df.values.tolist()
+
+            # Update the sheet with the new data
+            wks.update_values(f'A{next_row}', data_to_append)
             st.success("Thank you! Your ratings have been submitted.")
