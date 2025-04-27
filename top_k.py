@@ -35,6 +35,7 @@ You may optionally view the AI's reasoning by clicking **"Show AI Insight"**.
 
 # Load and display posts
 df = load_posts()
+df['text'] = df['text'].apply(lambda x: x.replace('$', '\\$') if isinstance(x, str) else x)
 df = df.sort_values(by="model_score", ascending=False).reset_index(drop=True)
 
 ratings = []
