@@ -1,4 +1,5 @@
 import streamlit as st
+import ast
 import pandas as pd
 import uuid
 from datetime import datetime, UTC
@@ -59,7 +60,12 @@ with st.form("topk_form"):
         insight_clicked = st.checkbox("Did you view the AI insight for this post?", key=f"insight_click_{row['post_id']}")
 
         with st.expander("Show AI Insight"):
-            insights = eval(row.get("ai_insight", "[]"))  # Cautiously parse list of tuples
+            insights_str = row.get("ai_insight", "[]")
+            try:
+                insights = ast.literal_eval(insights_str)
+            except (ValueError, SyntaxError):
+                insights = []
+
             if insights:
                 for title, description in insights:
                     st.markdown(f"**{title}:** {description}")
